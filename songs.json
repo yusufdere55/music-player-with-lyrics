@@ -1,0 +1,30 @@
+[
+    {
+        "artist":"NF",
+        "name":"Hope",
+        "songsSrc":"/musics/nf-hope.mp3",
+        "lyricsSrc":"/lyrics/nf-hope.lrc",
+        "image":"https://lh3.googleusercontent.com/leJKsIpbJSxJ-Q6S5sOH3d4I4sALCOvZfJ8tPACR7je5nsnLM6KnxA1BLmjC1pId1DQk5ZUI-E0DjNwGSg=w544-h544-l90-rj"
+    },
+    {
+        "artist":"NF",
+        "name":"Running",
+        "songsSrc":"/musics/nf-running.mp3",
+        "lyricsSrc":"/lyrics/nf-running.lrc",
+        "image":"https://lh3.googleusercontent.com/leJKsIpbJSxJ-Q6S5sOH3d4I4sALCOvZfJ8tPACR7je5nsnLM6KnxA1BLmjC1pId1DQk5ZUI-E0DjNwGSg=w544-h544-l90-rj"
+    },
+    {
+        "artist":"NF",
+        "name":"Mistake",
+        "songsSrc":"/musics/nf-mistake.mp3",
+        "lyricsSrc":"/lyrics/nf-mistake.lrc",
+        "image":"https://lh3.googleusercontent.com/leJKsIpbJSxJ-Q6S5sOH3d4I4sALCOvZfJ8tPACR7je5nsnLM6KnxA1BLmjC1pId1DQk5ZUI-E0DjNwGSg=w544-h544-l90-rj"
+    },
+    {
+        "artist":"Lady Gaga & Bruno Mars",
+        "name":"Die With A Smile",
+        "songsSrc":"/musics/die-with-a-smile.mp3",
+        "lyricsSrc":"/lyrics/die-with-a-smile.lrc",
+        "image":"https://lh3.googleusercontent.com/x5ST0wHIxD__IIxHF1UqUgXP4QW58ouj1EHROC9I5yHIb8cmoNr9rL54RfA-BnYay_eWmmOJfXNuFqmPEA=w544-h544-l90-rj"
+    }
+]
