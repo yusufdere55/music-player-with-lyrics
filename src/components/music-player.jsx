@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useLyrics } from "./useLyrics";
 import { Range } from "react-range";
+import { FaPause, FaPlay } from "react-icons/fa";
 
 const formatTime = (sec) => {
     const m = Math.floor(sec / 60)
@@ -12,8 +13,9 @@ const formatTime = (sec) => {
     return `${m}:${s}`;
   };
 
-const MusicPlayer = ({src, lrc}) => {
+const MusicPlayer = ({song,lrc}) => {
     const audioRef = useRef(null);
+    const lineRef = useRef([]);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -30,6 +32,13 @@ const MusicPlayer = ({src, lrc}) => {
         
         return () => clearInterval(interval);
     },[]);
+
+    useEffect(()=> {
+        const activeIndex = lyrics.findIndex((line) => line.time === activeLine?.time)
+        const el = lineRef.current[activeIndex];
+        if(el)
+            el.scrollIntoView({ behavior: "smooth", block:"center"})
+    }, [activeLine])
 
     const handlePlayPause = () => {
         const audio = audioRef.current;
@@ -51,57 +60,63 @@ const MusicPlayer = ({src, lrc}) => {
 
     return(
         <div className="p-4">
-
             <audio
                 ref={audioRef}
-                src={src}
+                src={song?.songsSrc}
                 onLoadedMetadata={(e) => setDuration(e.target.duration)}
                 onEnded={() => setIsPlaying(false)}
                 hidden
             />
 
-            <div className="flex items-center gap-4 mb-4">
+            <div className="flex items-center justify-center gap-4 mb-4">
                 <button
                     onClick={handlePlayPause}
-                    className="bg-white text-black px-4 py-2 rounded shadow"
+                    className="bg-white text-black p-4 cursor-pointer rounded-full shadow transition-all active:scale-95 hover:scale-105"
                 >
-                    {isPlaying ? "Duraklat" : "Oynat"}
+                    {isPlaying ? <FaPause /> : <FaPlay />}
                 </button>
+            </div>
+
+            <div className="flex flex-row gap-3 w-[60rem] items-center">
                 <span className="text-sm text-white/80">
-                    {formatTime(currentTime)} / {formatTime(duration)}
+                        {formatTime(currentTime)}
+                </span>
+                <Range
+                    step={0.1}
+                    min={0}
+                    max={duration || 1}
+                    values={[currentTime]}
+                    onChange={handleSeek}
+                    renderTrack={({ props, children }) => (
+                    <div
+                        {...props}
+                        className="h-2 w-full bg-gray-600 rounded cursor-pointer"
+                    >
+                        {children}
+                    </div>
+                    )}
+                    renderThumb={({ props }) => (
+                    <div
+                        {...props}
+                        className="w-4 h-4 bg-yellow-400 rounded-full shadow-lg focus:outline-none"
+                    />
+                    )}
+                />
+                <span className="text-sm text-white/80">
+                        {formatTime(duration)}
                 </span>
             </div>
 
-            {/* react-range */}
-            <Range
-                step={0.1}
-                min={0}
-                max={duration || 1}
-                values={[currentTime]}
-                onChange={handleSeek}
-                renderTrack={({ props, children }) => (
-                <div
-                    {...props}
-                    className="h-2 w-full bg-gray-600 rounded cursor-pointer"
-                >
-                    {children}
-                </div>
-                )}
-                renderThumb={({ props }) => (
-                <div
-                    {...props}
-                    className="w-4 h-4 bg-yellow-400 rounded-full shadow-lg focus:outline-none"
-                />
-                )}
-            />
-
-           <div className="mt-4 h-64 overflow-y-auto bg-black/20 p-4 rounded no-scrollbar text-center">
+           <div className="mt-4 h-64 overflow-y-auto relativ p-4 rounded no-scrollbar text-center">
                 {lyrics.map((line, index) => (
                 <p
                     key={index}
+                    ref={(el)=> (lineRef.current[index] = el)}
                     className={`transition-all ${
-                    activeLine?.time === line.time ? "text-yellow-400 font-bold" : "text-white/70"
-                    }`}
+                        activeLine?.time === line.time
+                          ? "text-yellow-400 font-bold"
+                          : "text-white/70"
+                      }`}
                 >
                     {line.text}
                 </p>
